@@ -1,0 +1,610 @@
+[
+  {
+    "id": "beans",
+    "name": "Beans",
+    "imageName": "beans",
+    "price": 160.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "gowarfali",
+    "name": "Gowarfali",
+    "imageName": "gowarfali",
+    "price": 100.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "tinde",
+    "name": "Tinde",
+    "imageName": "tinde",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "nimbu",
+    "name": "Nimbu",
+    "imageName": "nimbu",
+    "price": 160.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "shimla-mirch",
+    "name": "Shimla Mirch",
+    "imageName": "shimla_mirch",
+    "price": 160.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "chichda",
+    "name": "Chichda",
+    "imageName": "chichda",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "kachha-kela",
+    "name": "Kachha Kela",
+    "imageName": "kachha_kela",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "papita-kacha",
+    "name": "Papita Kacha",
+    "imageName": "papita_kacha",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "ful-gobhi",
+    "name": "Ful Gobhi",
+    "imageName": "ful_gobhi",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "patta-gobhi",
+    "name": "Patta Gobhi",
+    "imageName": "patta_gobhi",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "loki",
+    "name": "Loki",
+    "imageName": "loki",
+    "price": 50.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "tori",
+    "name": "Tori",
+    "imageName": "tori",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "petha",
+    "name": "Petha",
+    "imageName": "petha",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "kaddu",
+    "name": "Kaddu",
+    "imageName": "kaddu",
+    "price": 40.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "jimi-kandh",
+    "name": "Jimi Kandh",
+    "imageName": "jimi_kandh",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "karela",
+    "name": "Karela",
+    "imageName": "karela",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "kakoda",
+    "name": "Kakoda",
+    "imageName": "kakoda",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "bhindi",
+    "name": "Bhindi",
+    "imageName": "bhindi",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "jhinga",
+    "name": "Jhinga",
+    "imageName": "jhinga",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "kundru",
+    "name": "Kundru",
+    "imageName": "kundru",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "parwal",
+    "name": "Parwal",
+    "imageName": "parwal",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "baingan",
+    "name": "Baingan",
+    "imageName": "baingan",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "kheera-english",
+    "name": "Kheera English",
+    "imageName": "kheera_english",
+    "price": 100.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "desi-kheera",
+    "name": "Desi Kheera",
+    "imageName": "desi_kheera",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "hybrid-kheera",
+    "name": "Hybrid Kheera",
+    "imageName": "hybrid_kheera",
+    "price": 50.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "dhaniya",
+    "name": "Dhaniya",
+    "imageName": "dhaniya",
+    "price": 400.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "tomato",
+    "name": "Tomato",
+    "imageName": "tomato",
+    "price": 50.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "aloo",
+    "name": "Aloo",
+    "imageName": "aloo",
+    "price": 30.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "onion",
+    "name": "Onion",
+    "imageName": "onion",
+    "price": 50.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "adrak",
+    "name": "Adrak",
+    "imageName": "adrak",
+    "price": 320.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "lassan",
+    "name": "Lassan",
+    "imageName": "lassan",
+    "price": 280.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "lassan-mota",
+    "name": "Lassan Mota",
+    "imageName": "lassan_mota",
+    "price": 320.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "matar",
+    "name": "Matar",
+    "imageName": "matar",
+    "price": 320.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "hara-pyaz",
+    "name": "Hara Pyaz",
+    "imageName": "hara_pyaz",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "amla",
+    "name": "Amla",
+    "imageName": "amla",
+    "price": 280.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "mooli",
+    "name": "Mooli",
+    "imageName": "mooli",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "bhutta",
+    "name": "Bhutta",
+    "imageName": "bhutta",
+    "price": 40.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "mushroom",
+    "name": "Mushroom",
+    "imageName": "mushroom",
+    "price": 50.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Others"
+  },
+  {
+    "id": "beetroot",
+    "name": "Beetroot",
+    "imageName": "beetroot",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "arbi",
+    "name": "Arbi",
+    "imageName": "arbi",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "kachi-haldi",
+    "name": "Kachi Haldi",
+    "imageName": "kachi_haldi",
+    "price": 160.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "hari-mirch",
+    "name": "Hari Mirch",
+    "imageName": "hari_mirch",
+    "price": 160.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "gajar",
+    "name": "Gajar",
+    "imageName": "gajar",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Vegetables"
+  },
+  {
+    "id": "amda",
+    "name": "Amda",
+    "imageName": "amda",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "mangoes",
+    "name": "Mangoes",
+    "imageName": "Mangoes",
+    "price": 200.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "mango-chausa-golden",
+    "name": "Mango Chausa Golden",
+    "imageName": "mango_chausa_golden",
+    "price": 240.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "grapes",
+    "name": "Grapes",
+    "imageName": "grapes",
+    "price": 120.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "grapes-chinese-red",
+    "name": "Grapes Chinese Red",
+    "imageName": "grapes_chinese_red",
+    "price": 800.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "amrood",
+    "name": "Amrood",
+    "imageName": "amrood",
+    "price": 180.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "kiwi",
+    "name": "Kiwi",
+    "imageName": "kiwi",
+    "price": 180.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "plum",
+    "name": "Plum",
+    "imageName": "plum",
+    "price": 200.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "anaar",
+    "name": "Anaar",
+    "imageName": "anaar",
+    "price": 280.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "apple-gala",
+    "name": "Apple Gala",
+    "imageName": "apple_gala",
+    "price": 480.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "apple-bright-red",
+    "name": "Apple Bright Red",
+    "imageName": "apple_bright_red",
+    "price": 340.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "imageName": "apple",
+    "price": 300.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "apple-box",
+    "name": "Apple Box",
+    "imageName": "apple_box",
+    "price": 450.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "babugosha",
+    "name": "Babugosha",
+    "imageName": "babugosha",
+    "price": 200.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "anashpati",
+    "name": "Anashpati",
+    "imageName": "anashpati",
+    "price": 100.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "maalta",
+    "name": "Maalta",
+    "imageName": "maalta",
+    "price": 200.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "mausami",
+    "name": "Mausami",
+    "imageName": "mausami",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "tarbooj",
+    "name": "Tarbooj",
+    "imageName": "tarbooj",
+    "price": 60.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "kharbuja-muskmelon",
+    "name": "Kharbuja Muskmelon",
+    "imageName": "kharbuja_muskmelon",
+    "price": 120.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "pineapple",
+    "name": "Pineapple",
+    "imageName": "pineapple",
+    "price": 160.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  },
+  {
+    "id": "banana",
+    "name": "Banana",
+    "imageName": "banana",
+    "price": 80.0,
+    "pricingUnit": "PER_DOZEN",
+    "productType": "Fruits"
+  },
+  {
+    "id": "dragon-fruit",
+    "name": "Dragon Fruit",
+    "imageName": "dragon_fruit",
+    "price": 80.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "nariyal-60",
+    "name": "Nariyal",
+    "imageName": "nariyal",
+    "price": 60.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "nariyal-90",
+    "name": "Nariyal",
+    "imageName": "nariyal",
+    "price": 90.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "khajur",
+    "name": "Khajur",
+    "imageName": "khajur",
+    "price": 30.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "khajur-kimia",
+    "name": "Khajur Kimia",
+    "imageName": "khajur_kimia",
+    "price": 200.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "gulf-dates",
+    "name": "Gulf Dates",
+    "imageName": "gulf_dates",
+    "price": 160.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "date-crown-premium-fard-big",
+    "name": "Date Crown Premium Fard Big",
+    "imageName": "date_crown_premium_fard_big",
+    "price": 300.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "date-crown-premium-fard-small",
+    "name": "Date Crown Premium Fard Small",
+    "imageName": "date_crown_premium_fard_small",
+    "price": 160.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Fruits"
+  },
+  {
+    "id": "coconut-water",
+    "name": "Coconut Water",
+    "imageName": "coconut_water",
+    "price": 99.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Others"
+  },
+  {
+    "id": "real-fruit-juice",
+    "name": "Real Fruit Juice",
+    "imageName": "real_fruit_juice",
+    "price": 120.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Others"
+  },
+  {
+    "id": "imli-box",
+    "name": "Imli Box",
+    "imageName": "imli_box",
+    "price": 150.0,
+    "pricingUnit": "PER_PIECE",
+    "productType": "Others"
+  },
+  {
+    "id": "papita",
+    "name": "Papita",
+    "imageName": "papita",
+    "price": 80.0,
+    "pricingUnit": "PER_KG",
+    "productType": "Fruits"
+  }
+]
