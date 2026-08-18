@@ -10,6 +10,7 @@ fun ProductEntity.toProductItem(): ProductItem {
     return ProductItem(
         id = id,
         name = name,
+        hindiName = hindiName,
         imageName = imageName,
         price = price,
         pricingUnit = pricingUnit,
@@ -21,6 +22,7 @@ fun ProductItem.toProductEntity(): ProductEntity {
     return ProductEntity(
         id = id,
         name = name,
+        hindiName = hindiName,
         imageName = imageName,
         price = price,
         pricingUnit = pricingUnit,
@@ -32,6 +34,7 @@ fun ProductJson.toEntity(): ProductEntity {
     return ProductEntity(
         id = id,
         name = name,
+        hindiName = hindiName,
         imageName = imageName,
         price = price,
         pricingUnit = PricingUnit.valueOf(pricingUnit),

@@ -10,6 +10,7 @@ val sampleItemsList = mutableListOf(
     ProductItem(
         id = "banana",
         name = "Bananas",
+        hindiName = "",
         imageName = "banana",
         productType = StoreItemType.Fruits,
         price = 40.0,
@@ -19,6 +20,7 @@ val sampleItemsList = mutableListOf(
     ProductItem(
         id = "apple",
         name = "Apples",
+        hindiName = "",
         imageName = "banana",
         productType = StoreItemType.Fruits,
         price = 40.0,
@@ -28,6 +30,7 @@ val sampleItemsList = mutableListOf(
     ProductItem(
         id = "egg",
         name = "Eggs",
+        hindiName = "",
         imageName = "banana",
         productType = StoreItemType.Others,
         price = 40.0,
@@ -37,6 +40,7 @@ val sampleItemsList = mutableListOf(
     ProductItem(
         id = "tomato",
         name = "Tomatoes",
+        hindiName = "",
         imageName = "banana",
         productType = StoreItemType.Vegetables,
         price = 40.0,
@@ -46,6 +50,7 @@ val sampleItemsList = mutableListOf(
     ProductItem(
         id = "egg",
         name = "Eggs",
+        hindiName = "",
         imageName = "banana",
         productType = StoreItemType.Others,
         price = 40.0,
@@ -55,6 +60,7 @@ val sampleItemsList = mutableListOf(
     ProductItem(
         id = "tomato",
         name = "Tomatoes",
+        hindiName = "",
         imageName = "banana",
         productType = StoreItemType.Vegetables,
         price = 40.0,

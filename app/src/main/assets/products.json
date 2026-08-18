@@ -2,6 +2,7 @@
   {
     "id": "beans",
     "name": "Beans",
+    "hindiName": "बीन्स",
     "imageName": "beans",
     "price": 160.0,
     "pricingUnit": "PER_KG",
@@ -10,6 +11,7 @@
   {
     "id": "gowarfali",
     "name": "Gowarfali",
+    "hindiName": "ग्वार फली",
     "imageName": "gowarfali",
     "price": 100.0,
     "pricingUnit": "PER_KG",
@@ -18,6 +20,7 @@
   {
     "id": "tinde",
     "name": "Tinde",
+    "hindiName": "टिंडे",
     "imageName": "tinde",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -26,6 +29,7 @@
   {
     "id": "nimbu",
     "name": "Nimbu",
+    "hindiName": "नींबू",
     "imageName": "nimbu",
     "price": 160.0,
     "pricingUnit": "PER_KG",
@@ -34,6 +38,7 @@
   {
     "id": "shimla-mirch",
     "name": "Shimla Mirch",
+    "hindiName": "शिमला मिर्च",
     "imageName": "shimla_mirch",
     "price": 160.0,
     "pricingUnit": "PER_KG",
@@ -42,6 +47,7 @@
   {
     "id": "chichda",
     "name": "Chichda",
+    "hindiName": "चिचड़ा",
     "imageName": "chichda",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -50,6 +56,7 @@
   {
     "id": "kachha-kela",
     "name": "Kachha Kela",
+    "hindiName": "कच्चा केला",
     "imageName": "kachha_kela",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -58,6 +65,7 @@
   {
     "id": "papita-kacha",
     "name": "Papita Kacha",
+    "hindiName": "कच्चा पपीता",
     "imageName": "papita_kacha",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -66,6 +74,7 @@
   {
     "id": "ful-gobhi",
     "name": "Ful Gobhi",
+    "hindiName": "फूल गोभी",
     "imageName": "ful_gobhi",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -74,6 +83,7 @@
   {
     "id": "patta-gobhi",
     "name": "Patta Gobhi",
+    "hindiName": "पत्ता गोभी",
     "imageName": "patta_gobhi",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -82,6 +92,7 @@
   {
     "id": "loki",
     "name": "Loki",
+    "hindiName": "लौकी",
     "imageName": "loki",
     "price": 50.0,
     "pricingUnit": "PER_KG",
@@ -90,6 +101,7 @@
   {
     "id": "tori",
     "name": "Tori",
+    "hindiName": "तोरी",
     "imageName": "tori",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -98,6 +110,7 @@
   {
     "id": "petha",
     "name": "Petha",
+    "hindiName": "पेठा",
     "imageName": "petha",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -106,6 +119,7 @@
   {
     "id": "kaddu",
     "name": "Kaddu",
+    "hindiName": "कद्दू",
     "imageName": "kaddu",
     "price": 40.0,
     "pricingUnit": "PER_KG",
@@ -114,6 +128,7 @@
   {
     "id": "jimi-kandh",
     "name": "Jimi Kandh",
+    "hindiName": "जिमीकंद",
     "imageName": "jimi_kandh",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -122,6 +137,7 @@
   {
     "id": "karela",
     "name": "Karela",
+    "hindiName": "करेला",
     "imageName": "karela",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -130,6 +146,7 @@
   {
     "id": "kakoda",
     "name": "Kakoda",
+    "hindiName": "ककोड़ा",
     "imageName": "kakoda",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -138,6 +155,7 @@
   {
     "id": "bhindi",
     "name": "Bhindi",
+    "hindiName": "भिंडी",
     "imageName": "bhindi",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -146,6 +164,7 @@
   {
     "id": "jhinga",
     "name": "Jhinga",
+    "hindiName": "झींगा",
     "imageName": "jhinga",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -154,6 +173,7 @@
   {
     "id": "kundru",
     "name": "Kundru",
+    "hindiName": "कुंदरू",
     "imageName": "kundru",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -162,6 +182,7 @@
   {
     "id": "parwal",
     "name": "Parwal",
+    "hindiName": "परवल",
     "imageName": "parwal",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -170,6 +191,7 @@
   {
     "id": "baingan",
     "name": "Baingan",
+    "hindiName": "बैंगन",
     "imageName": "baingan",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -178,6 +200,7 @@
   {
     "id": "kheera-english",
     "name": "Kheera English",
+    "hindiName": "अंग्रेज़ी खीरा",
     "imageName": "kheera_english",
     "price": 100.0,
     "pricingUnit": "PER_KG",
@@ -186,6 +209,7 @@
   {
     "id": "desi-kheera",
     "name": "Desi Kheera",
+    "hindiName": "देसी खीरा",
     "imageName": "desi_kheera",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -194,6 +218,7 @@
   {
     "id": "hybrid-kheera",
     "name": "Hybrid Kheera",
+    "hindiName": "हाइब्रिड खीरा",
     "imageName": "hybrid_kheera",
     "price": 50.0,
     "pricingUnit": "PER_KG",
@@ -202,6 +227,7 @@
   {
     "id": "dhaniya",
     "name": "Dhaniya",
+    "hindiName": "धनिया",
     "imageName": "dhaniya",
     "price": 400.0,
     "pricingUnit": "PER_KG",
@@ -210,6 +236,7 @@
   {
     "id": "tomato",
     "name": "Tomato",
+    "hindiName": "टमाटर",
     "imageName": "tomato",
     "price": 50.0,
     "pricingUnit": "PER_KG",
@@ -218,6 +245,7 @@
   {
     "id": "aloo",
     "name": "Aloo",
+    "hindiName": "आलू",
     "imageName": "aloo",
     "price": 30.0,
     "pricingUnit": "PER_KG",
@@ -226,6 +254,7 @@
   {
     "id": "onion",
     "name": "Onion",
+    "hindiName": "प्याज़",
     "imageName": "onion",
     "price": 50.0,
     "pricingUnit": "PER_KG",
@@ -234,6 +263,7 @@
   {
     "id": "adrak",
     "name": "Adrak",
+    "hindiName": "अदरक",
     "imageName": "adrak",
     "price": 320.0,
     "pricingUnit": "PER_KG",
@@ -242,6 +272,7 @@
   {
     "id": "lassan",
     "name": "Lassan",
+    "hindiName": "लहसुन",
     "imageName": "lassan",
     "price": 280.0,
     "pricingUnit": "PER_KG",
@@ -250,6 +281,7 @@
   {
     "id": "lassan-mota",
     "name": "Lassan Mota",
+    "hindiName": "मोटा लहसुन",
     "imageName": "lassan_mota",
     "price": 320.0,
     "pricingUnit": "PER_KG",
@@ -258,6 +290,7 @@
   {
     "id": "matar",
     "name": "Matar",
+    "hindiName": "मटर",
     "imageName": "matar",
     "price": 320.0,
     "pricingUnit": "PER_KG",
@@ -266,6 +299,7 @@
   {
     "id": "hara-pyaz",
     "name": "Hara Pyaz",
+    "hindiName": "हरा प्याज़",
     "imageName": "hara_pyaz",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -274,6 +308,7 @@
   {
     "id": "amla",
     "name": "Amla",
+    "hindiName": "आंवला",
     "imageName": "amla",
     "price": 280.0,
     "pricingUnit": "PER_KG",
@@ -282,6 +317,7 @@
   {
     "id": "mooli",
     "name": "Mooli",
+    "hindiName": "मूली",
     "imageName": "mooli",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -290,6 +326,7 @@
   {
     "id": "bhutta",
     "name": "Bhutta",
+    "hindiName": "भुट्टा",
     "imageName": "bhutta",
     "price": 40.0,
     "pricingUnit": "PER_KG",
@@ -298,6 +335,7 @@
   {
     "id": "mushroom",
     "name": "Mushroom",
+    "hindiName": "मशरूम",
     "imageName": "mushroom",
     "price": 50.0,
     "pricingUnit": "PER_PIECE",
@@ -306,6 +344,7 @@
   {
     "id": "beetroot",
     "name": "Beetroot",
+    "hindiName": "चुकंदर",
     "imageName": "beetroot",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -314,6 +353,7 @@
   {
     "id": "arbi",
     "name": "Arbi",
+    "hindiName": "अरबी",
     "imageName": "arbi",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -322,6 +362,7 @@
   {
     "id": "kachi-haldi",
     "name": "Kachi Haldi",
+    "hindiName": "कच्ची हल्दी",
     "imageName": "kachi_haldi",
     "price": 160.0,
     "pricingUnit": "PER_KG",
@@ -330,6 +371,7 @@
   {
     "id": "hari-mirch",
     "name": "Hari Mirch",
+    "hindiName": "हरी मिर्च",
     "imageName": "hari_mirch",
     "price": 160.0,
     "pricingUnit": "PER_KG",
@@ -338,6 +380,7 @@
   {
     "id": "gajar",
     "name": "Gajar",
+    "hindiName": "गाजर",
     "imageName": "gajar",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -346,6 +389,7 @@
   {
     "id": "amda",
     "name": "Amda",
+    "hindiName": "आमड़ा",
     "imageName": "amda",
     "price": 80.0,
     "pricingUnit": "PER_KG",
@@ -354,6 +398,7 @@
   {
     "id": "mangoes",
     "name": "Mangoes",
+    "hindiName": "आम",
     "imageName": "Mangoes",
     "price": 200.0,
     "pricingUnit": "PER_KG",
@@ -362,6 +407,7 @@
   {
     "id": "mango-chausa-golden",
     "name": "Mango Chausa Golden",
+    "hindiName": "चौसा गोल्डन आम",
     "imageName": "mango_chausa_golden",
     "price": 240.0,
     "pricingUnit": "PER_KG",
@@ -370,6 +416,7 @@
   {
     "id": "grapes",
     "name": "Grapes",
+    "hindiName": "अंगूर",
     "imageName": "grapes",
     "price": 120.0,
     "pricingUnit": "PER_PIECE",
@@ -378,6 +425,7 @@
   {
     "id": "grapes-chinese-red",
     "name": "Grapes Chinese Red",
+    "hindiName": "चाइनीज़ लाल अंगूर",
     "imageName": "grapes_chinese_red",
     "price": 800.0,
     "pricingUnit": "PER_KG",
@@ -386,6 +434,7 @@
   {
     "id": "amrood",
     "name": "Amrood",
+    "hindiName": "अमरूद",
     "imageName": "amrood",
     "price": 180.0,
     "pricingUnit": "PER_KG",
@@ -394,6 +443,7 @@
   {
     "id": "kiwi",
     "name": "Kiwi",
+    "hindiName": "कीवी",
     "imageName": "kiwi",
     "price": 180.0,
     "pricingUnit": "PER_PIECE",
@@ -402,6 +452,7 @@
   {
     "id": "plum",
     "name": "Plum",
+    "hindiName": "आलूबुखारा",
     "imageName": "plum",
     "price": 200.0,
     "pricingUnit": "PER_KG",
@@ -410,6 +461,7 @@
   {
     "id": "anaar",
     "name": "Anaar",
+    "hindiName": "अनार",
     "imageName": "anaar",
     "price": 280.0,
     "pricingUnit": "PER_KG",
@@ -418,6 +470,7 @@
   {
     "id": "apple-gala",
     "name": "Apple Gala",
+    "hindiName": "गाला सेब",
     "imageName": "apple_gala",
     "price": 480.0,
     "pricingUnit": "PER_KG",
@@ -426,6 +479,7 @@
   {
     "id": "apple-bright-red",
     "name": "Apple Bright Red",
+    "hindiName": "ब्राइट रेड सेब",
     "imageName": "apple_bright_red",
     "price": 340.0,
     "pricingUnit": "PER_KG",
@@ -434,6 +488,7 @@
   {
     "id": "apple",
     "name": "Apple",
+    "hindiName": "सेब",
     "imageName": "apple",
     "price": 300.0,
     "pricingUnit": "PER_KG",
@@ -442,6 +497,7 @@
   {
     "id": "apple-box",
     "name": "Apple Box",
+    "hindiName": "सेब का बॉक्स",
     "imageName": "apple_box",
     "price": 450.0,
     "pricingUnit": "PER_PIECE",
@@ -450,6 +506,7 @@
   {
     "id": "babugosha",
     "name": "Babugosha",
+    "hindiName": "बब्बूगोशा",
     "imageName": "babugosha",
     "price": 200.0,
     "pricingUnit": "PER_KG",
@@ -458,6 +515,7 @@
   {
     "id": "anashpati",
     "name": "Anashpati",
+    "hindiName": "नाशपाती",
     "imageName": "anashpati",
     "price": 100.0,
     "pricingUnit": "PER_KG",
@@ -466,6 +524,7 @@
   {
     "id": "maalta",
     "name": "Maalta",
+    "hindiName": "माल्टा",
     "imageName": "maalta",
     "price": 200.0,
     "pricingUnit": "PER_KG",
@@ -474,6 +533,7 @@
   {
     "id": "mausami",
     "name": "Mausami",
+    "hindiName": "मौसमी",
     "imageName": "mausami",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -482,6 +542,7 @@
   {
     "id": "tarbooj",
     "name": "Tarbooj",
+    "hindiName": "तरबूज",
     "imageName": "tarbooj",
     "price": 60.0,
     "pricingUnit": "PER_KG",
@@ -490,6 +551,7 @@
   {
     "id": "kharbuja-muskmelon",
     "name": "Kharbuja Muskmelon",
+    "hindiName": "खरबूजा",
     "imageName": "kharbuja_muskmelon",
     "price": 120.0,
     "pricingUnit": "PER_KG",
@@ -498,6 +560,7 @@
   {
     "id": "pineapple",
     "name": "Pineapple",
+    "hindiName": "अनानास",
     "imageName": "pineapple",
     "price": 160.0,
     "pricingUnit": "PER_KG",
@@ -506,6 +569,7 @@
   {
     "id": "banana",
     "name": "Banana",
+    "hindiName": "केला",
     "imageName": "banana",
     "price": 80.0,
     "pricingUnit": "PER_DOZEN",
@@ -514,6 +578,7 @@
   {
     "id": "dragon-fruit",
     "name": "Dragon Fruit",
+    "hindiName": "ड्रैगन फ्रूट",
     "imageName": "dragon_fruit",
     "price": 80.0,
     "pricingUnit": "PER_PIECE",
@@ -522,6 +587,7 @@
   {
     "id": "nariyal-60",
     "name": "Nariyal",
+    "hindiName": "नारियल",
     "imageName": "nariyal",
     "price": 60.0,
     "pricingUnit": "PER_PIECE",
@@ -530,6 +596,7 @@
   {
     "id": "nariyal-90",
     "name": "Nariyal",
+    "hindiName": "नारियल",
     "imageName": "nariyal",
     "price": 90.0,
     "pricingUnit": "PER_PIECE",
@@ -538,6 +605,7 @@
   {
     "id": "khajur",
     "name": "Khajur",
+    "hindiName": "खजूर",
     "imageName": "khajur",
     "price": 30.0,
     "pricingUnit": "PER_PIECE",
@@ -546,6 +614,7 @@
   {
     "id": "khajur-kimia",
     "name": "Khajur Kimia",
+    "hindiName": "खजूर किमिया",
     "imageName": "khajur_kimia",
     "price": 200.0,
     "pricingUnit": "PER_PIECE",
@@ -554,6 +623,7 @@
   {
     "id": "gulf-dates",
     "name": "Gulf Dates",
+    "hindiName": "गल्फ खजूर",
     "imageName": "gulf_dates",
     "price": 160.0,
     "pricingUnit": "PER_PIECE",
@@ -562,6 +632,7 @@
   {
     "id": "date-crown-premium-fard-big",
     "name": "Date Crown Premium Fard Big",
+    "hindiName": "डेट क्राउन प्रीमियम फ़ार्ड बड़ा",
     "imageName": "date_crown_premium_fard_big",
     "price": 300.0,
     "pricingUnit": "PER_PIECE",
@@ -570,6 +641,7 @@
   {
     "id": "date-crown-premium-fard-small",
     "name": "Date Crown Premium Fard Small",
+    "hindiName": "डेट क्राउन प्रीमियम फ़ार्ड छोटा",
     "imageName": "date_crown_premium_fard_small",
     "price": 160.0,
     "pricingUnit": "PER_PIECE",
@@ -578,6 +650,7 @@
   {
     "id": "coconut-water",
     "name": "Coconut Water",
+    "hindiName": "नारियल पानी",
     "imageName": "coconut_water",
     "price": 99.0,
     "pricingUnit": "PER_PIECE",
@@ -586,6 +659,7 @@
   {
     "id": "real-fruit-juice",
     "name": "Real Fruit Juice",
+    "hindiName": "रियल फ्रूट जूस",
     "imageName": "real_fruit_juice",
     "price": 120.0,
     "pricingUnit": "PER_PIECE",
@@ -594,6 +668,7 @@
   {
     "id": "imli-box",
     "name": "Imli Box",
+    "hindiName": "इमली बॉक्स",
     "imageName": "imli_box",
     "price": 150.0,
     "pricingUnit": "PER_PIECE",
@@ -602,6 +677,7 @@
   {
     "id": "papita",
     "name": "Papita",
+    "hindiName": "पपीता",
     "imageName": "papita",
     "price": 80.0,
     "pricingUnit": "PER_KG",

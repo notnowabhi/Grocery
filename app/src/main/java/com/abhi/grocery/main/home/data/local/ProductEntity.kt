@@ -10,6 +10,7 @@ data class ProductEntity(
     @PrimaryKey
     val id: String,
     val name: String,
+    val hindiName: String,
     val imageName: String,
     val price: Double,
     val pricingUnit: PricingUnit,

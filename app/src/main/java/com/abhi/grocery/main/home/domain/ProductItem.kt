@@ -5,6 +5,7 @@ import com.abhi.grocery.main.home.presentation.screen.StoreItemType
 data class ProductItem(
     val id: String,
     val name: String,
+    val hindiName: String,
     val imageName: String,
     val price: Double,
     val pricingUnit: PricingUnit,
