@@ -63,8 +63,8 @@ fun ProductItemCustomerView(
                 // add item to cart from this click. pass in the item
                 onClick(productItem)
             }
-            .padding(horizontal = 20.dp)
-            .padding(vertical = 35.dp),
+//            .padding(horizontal = 20.dp)
+            .padding(top = 35.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
@@ -78,45 +78,47 @@ fun ProductItemCustomerView(
         Column(
             modifier = Modifier
                 .clickable { onSpeak(ttsString) }
-                .width(cardWidth - 40.dp),
+                .width(cardWidth),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = productItem.name,
-                fontFamily = Geist,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 16.sp
-            )
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 35.dp)
+            ) {
+                Text(
+                    text = productItem.name,
+                    fontFamily = Geist,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp
+                )
 
-            Row() {
-                Column() {
-                    Text(
-                        text = amountString,
-                        fontFamily = Geist,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 20.sp
-                    )
-                    
-                    Text(
-                        text = productItem.pricingUnit.title,
-                        fontFamily = Geist,
-                        fontWeight = FontWeight.ExtraLight,
-                        fontSize = 16.sp
+                Row() {
+                    Column() {
+                        Text(
+                            text = amountString,
+                            fontFamily = Geist,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 20.sp
+                        )
+
+                        Text(
+                            text = productItem.pricingUnit.title,
+                            fontFamily = Geist,
+                            fontWeight = FontWeight.ExtraLight,
+                            fontSize = 16.sp
+                        )
+                    }
+
+                    Spacer(Modifier.weight(1f))
+
+                    ButtonsView(
+                        onSpeak = { onSpeak(ttsString) }
                     )
                 }
-
-                Spacer(Modifier.weight(1f))
-
-                ButtonsView(
-                    onSpeak = { onSpeak(ttsString) }
-                )
             }
-
-
         }
-
-
     }
 }
 
