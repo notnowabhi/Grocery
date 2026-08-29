@@ -1,6 +1,7 @@
 package com.abhi.grocery.common.utils
 
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
@@ -12,6 +13,7 @@ data class ScreenSize(
     val height: Dp
 )
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun rememberScreenSize(): ScreenSize {
 
