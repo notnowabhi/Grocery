@@ -61,6 +61,7 @@ import com.abhi.grocery.main.home.data.repository.PreviewInventoryRepository
 import com.abhi.grocery.main.home.domain.ProductItem
 import com.abhi.grocery.main.home.domain.repository.InventoryRepository
 import com.abhi.grocery.main.home.presentation.components.AddItemOverlayView
+import com.abhi.grocery.main.home.presentation.components.AddItemToInventoryView
 import com.abhi.grocery.main.home.presentation.components.InventoryListCustomerView
 import com.abhi.grocery.main.home.presentation.components.InventoryListVendorView
 import com.abhi.grocery.main.home.presentation.viewmodel.HomeViewModel
@@ -87,6 +88,9 @@ fun HomeTab(
     var time by remember { mutableStateOf(LocalTime.now()) }
 
     val customerSelectedItem = remember { mutableStateOf<ProductItem?>(null) }
+
+    val isAddItemToInventoryViewVisible = remember { mutableStateOf<Boolean>(false) }
+    val isRemoveItemFromInventoryActive = remember { mutableStateOf<Boolean>(false) }
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -124,8 +128,17 @@ fun HomeTab(
                     onVendorItemTypeChange = {vendorSelectedItemType = it},
                     onCustomerItemTypeChange = {customerSelectedItemType = it},
                     onSpeak = { onSpeak(it) },
+                    onAddItemClick = { isAddItemToInventoryViewVisible.value = true },
+                    onRemoveItemClick = { isRemoveItemFromInventoryActive.value = true },
                     context = context
                 )
+
+                if(isAddItemToInventoryViewVisible.value) {
+                    AddItemToInventoryView(
+                        isVisible = isAddItemToInventoryViewVisible,
+                        onAdd = { onAddToInventory(it) }
+                    )
+                }
             }
         }
 
@@ -154,6 +167,8 @@ private fun AddItemsStateView(
     onVendorItemTypeChange: (StoreItemType) -> Unit,
     onCustomerItemTypeChange: (StoreItemType) -> Unit,
     onSpeak: (String) -> Unit,
+    onAddItemClick: () -> Unit,
+    onRemoveItemClick: () -> Unit,
     context: Context
 ) {
     Column(
@@ -187,6 +202,8 @@ private fun AddItemsStateView(
                     inventory,
                     vendorSelectedItemType,
                     onVendorItemTypeChange,
+                    onAddItemClick = onAddItemClick,
+                    onRemoveItemClick = onRemoveItemClick,
                     context
                 )
             }
@@ -241,6 +258,8 @@ private fun VendorAddItemsView(
     products: List<ProductItem>,
     selectedItemType: StoreItemType,
     onVendorItemTypeChange: (StoreItemType) -> Unit,
+    onAddItemClick: () -> Unit,
+    onRemoveItemClick: () -> Unit,
     context: Context
 ) {
     Box() {
@@ -281,14 +300,17 @@ private fun VendorAddItemsView(
         ) {
             Spacer(modifier = Modifier.weight(1f))
 
-            AddItemsButtons()
+            AddItemsButtons(onAddItemClick, onRemoveItemClick)
         }
 
     }
 }
 
 @Composable
-private fun AddItemsButtons() {
+private fun AddItemsButtons(
+    onAddItemClick: () -> Unit,
+    onRemoveItemClick: () -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -302,7 +324,7 @@ private fun AddItemsButtons() {
                 )
                 .clip(CircleShape)
                 .background(Color.White)
-                .clickable {}
+                .clickable { onRemoveItemClick() }
                 .padding(12.dp)
         )
 
@@ -318,7 +340,7 @@ private fun AddItemsButtons() {
                 )
                 .clip(CircleShape)
                 .background(Color.White)
-                .clickable {}
+                .clickable { onAddItemClick() }
                 .padding(12.dp)
         )
     }
