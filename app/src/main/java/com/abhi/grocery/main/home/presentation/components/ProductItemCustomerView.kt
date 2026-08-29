@@ -48,7 +48,7 @@ fun ProductItemCustomerView(
 
     val amountString = "₹" + productItem.price.toString()
 
-    val ttsString = productItem.name + ", " + productItem.price.toString() + "₹" + " " + productItem.pricingUnit.unit
+    val ttsString = productItem.hindiName + ", " + productItem.price.toString() + "₹" + " " + productItem.pricingUnit.unit
 
     Column(
         modifier = Modifier
