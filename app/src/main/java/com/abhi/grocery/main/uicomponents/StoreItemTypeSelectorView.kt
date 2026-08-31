@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,9 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.abhi.grocery.main.MainScreen
 import com.abhi.grocery.main.cart.data.repository.CartRepositoryImpl
 import com.abhi.grocery.main.cart.presentation.viewmodel.CartViewModel
-import com.abhi.grocery.main.home.data.repository.InventoryRepositoryImpl
 import com.abhi.grocery.main.home.data.repository.PreviewInventoryRepository
-import com.abhi.grocery.main.home.domain.repository.InventoryRepository
 import com.abhi.grocery.main.home.presentation.screen.StoreItemType
 import com.abhi.grocery.main.home.presentation.viewmodel.HomeViewModel
 import com.abhi.grocery.ui.theme.Geist
@@ -81,6 +80,7 @@ private fun ItemView(
 
     Row(
         modifier = modifier
+            .height(36.dp)
             .background(
                 shape = RoundedCornerShape(50),
                 color = bgColor
@@ -98,7 +98,6 @@ private fun ItemView(
             painterResource(iconId),
             contentDescription = null,
             modifier = Modifier
-                .padding(vertical = 11.dp)
                 .size(14.dp)
         )
 

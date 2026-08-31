@@ -16,7 +16,7 @@ data class ProductItem(
 enum class PricingUnit(val title: String, val unit: String) {
     PER_KG(title = "/ kg", unit = "kg"),
     PER_GRAM(title = "/ gram", unit = "g"),
-    PER_PIECE(title = "/ Piece", unit = "piece"),
+    PER_PIECE(title = "/ piece", unit = "piece"),
     PER_DOZEN("/ dozen", "dozen")
 }
 

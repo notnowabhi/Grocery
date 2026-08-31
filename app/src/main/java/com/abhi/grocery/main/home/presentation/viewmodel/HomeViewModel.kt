@@ -2,7 +2,6 @@ package com.abhi.grocery.main.home.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abhi.grocery.main.cart.domain.CartItem
 import com.abhi.grocery.main.cart.domain.repository.CartRepository
 import com.abhi.grocery.main.home.domain.ProductItem
@@ -20,7 +19,6 @@ class HomeViewModel @Inject constructor(
     private val inventoryRepository: InventoryRepository
 ): ViewModel() {
     val cartItems = cartRepository.cartItems
-//    val inventoryItems = inventoryRepository.inventoryItems
     val inventoryItems: StateFlow<List<ProductItem>> =
         inventoryRepository.inventoryItems
             .stateIn(
