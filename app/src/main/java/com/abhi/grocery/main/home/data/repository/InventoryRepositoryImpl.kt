@@ -1,6 +1,5 @@
 package com.abhi.grocery.main.home.data.repository
 
-import android.util.Log
 import com.abhi.grocery.main.assets.ProductAssetDataSource
 import com.abhi.grocery.main.home.data.local.ProductDao
 import com.abhi.grocery.main.home.data.mapper.toEntity
