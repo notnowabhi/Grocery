@@ -1,5 +1,9 @@
 package com.abhi.grocery.main.home.presentation.components
 
+import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -41,9 +45,14 @@ import com.abhi.grocery.main.home.presentation.screen.StoreItemType
 import com.abhi.grocery.main.uicomponents.StoreItemTypeSelectorView
 import com.abhi.grocery.ui.theme.Geist
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.core.content.FileProvider
+import coil3.compose.AsyncImage
 import com.abhi.grocery.R
+import java.io.File
 import java.util.UUID
 
 @Composable
@@ -51,10 +60,26 @@ fun AddItemToInventoryView(
     isVisible: MutableState<Boolean>,
     onAdd: (ProductItem) -> Unit // call this when submitting
 ) {
+    val context = LocalContext.current
+
     var type by remember { mutableStateOf<StoreItemType>(StoreItemType.Vegetables) }
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var pricingUnit by remember { mutableStateOf<PricingUnit>(PricingUnit.PER_KG) }
+
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingImageUri by remember { mutableStateOf<Uri?>(null) }
+
+    // registering the camera launcher
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            // imageUri now contains the captured image
+            imageUri = pendingImageUri
+        }
+        pendingImageUri = null
+    }
 
     Box(
         modifier = Modifier
@@ -82,7 +107,13 @@ fun AddItemToInventoryView(
 
             Spacer(Modifier.height(30.dp))
 
-            ImageBox()
+            ImageBox(
+                imageUri = imageUri
+            ) {
+                val uri = createImageUri(context)
+                pendingImageUri = uri
+                cameraLauncher.launch(uri)
+            }
 
             Spacer(Modifier.height(8.dp))
 
@@ -263,7 +294,10 @@ private fun TextFields(
 }
 
 @Composable
-private fun ImageBox() {
+private fun ImageBox(
+    imageUri: Uri?,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .size(140.dp)
@@ -271,17 +305,30 @@ private fun ImageBox() {
                 width = 1.dp,
                 color = Color(0xFFD9D9D9),
                 shape = RoundedCornerShape(20.dp)
-            ),
+            )
+            .clip(RoundedCornerShape(20.dp))
+            .clickable{ onClick() },
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "Click to add image",
-            fontFamily = Geist,
-            fontWeight = FontWeight.Light,
-            fontSize = 10.sp,
-            color = Color.Black.copy(alpha = 0.21f),
-            textAlign = TextAlign.Center,
-        )
+        if(imageUri != null) {
+            AsyncImage(
+                model = imageUri,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(140.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+                contentScale = ContentScale.Crop,
+            )
+        } else {
+            Text(
+                text = "Click to add image",
+                fontFamily = Geist,
+                fontWeight = FontWeight.Light,
+                fontSize = 10.sp,
+                color = Color.Black.copy(alpha = 0.21f),
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 
@@ -302,6 +349,19 @@ private fun AddItemButton(
             .clickable{ onClick() }
             .padding(vertical = 16.dp)
             .fillMaxWidth()
+    )
+}
+
+private fun createImageUri(context: Context): Uri {
+    val file = File(
+        context.cacheDir,
+        "captured_${System.currentTimeMillis()}.jpg"
+    )
+
+    return FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file
     )
 }
 

@@ -74,4 +74,7 @@ dependencies {
 
     //GSON
     implementation(libs.gson)
+
+    // coil image loading
+    implementation(libs.coil.compose.v304)
 }
