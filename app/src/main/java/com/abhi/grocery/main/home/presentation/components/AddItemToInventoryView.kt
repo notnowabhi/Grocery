@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -69,22 +70,25 @@ fun AddItemToInventoryView(
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var pendingImageUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingImageFile by remember { mutableStateOf<File?>(null) }
+    var capturedImageFileName by remember { mutableStateOf("") }
 
     // registering the camera launcher
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
-        if (success) {
-            // imageUri now contains the captured image
+        if (success && pendingImageFile != null) {
+            // capture succeeded — the file now has real image bytes on disk
+            capturedImageFileName = pendingImageFile!!.name  // e.g. "3f2a1e...jpg"
             imageUri = pendingImageUri
         }
-        pendingImageUri = null
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Black.copy(alpha = 0.3f))
+            .imePadding()
             .clickable { isVisible.value = false }
             .padding(horizontal = 45.dp),
         contentAlignment = Alignment.Center
@@ -110,7 +114,9 @@ fun AddItemToInventoryView(
             ImageBox(
                 imageUri = imageUri
             ) {
-                val uri = createImageUri(context)
+                val file = createImageFile(context)
+                pendingImageFile = file
+                val uri = getUriForFile(context, file)
                 pendingImageUri = uri
                 cameraLauncher.launch(uri)
             }
@@ -134,12 +140,14 @@ fun AddItemToInventoryView(
                         id = UUID.randomUUID().toString(),
                         name = name,
                         hindiName = name,
-                        imageName = "",
+                        imageName = capturedImageFileName,
                         price = price.toDoubleOrNull() ?: 0.0,
                         pricingUnit = pricingUnit,
                         productType = type
                     )
                 )
+
+                isVisible.value = false
             }
         }
     }
@@ -352,12 +360,13 @@ private fun AddItemButton(
     )
 }
 
-private fun createImageUri(context: Context): Uri {
-    val file = File(
-        context.cacheDir,
-        "captured_${System.currentTimeMillis()}.jpg"
-    )
+private fun createImageFile(context: Context): File {
+    val imagesDir = File(context.filesDir, "product_images")
+    if (!imagesDir.exists()) imagesDir.mkdirs()
+    return File(imagesDir, "${UUID.randomUUID()}.jpg")
+}
 
+private fun getUriForFile(context: Context, file: File): Uri {
     return FileProvider.getUriForFile(
         context,
         "${context.packageName}.fileprovider",
