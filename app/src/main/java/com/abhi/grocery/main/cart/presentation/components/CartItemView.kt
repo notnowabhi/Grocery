@@ -1,5 +1,6 @@
 package com.abhi.grocery.main.cart.presentation.components
 
+import android.content.Context
 import android.graphics.Paint
 import android.text.Layout
 import androidx.compose.foundation.Image
@@ -25,6 +26,8 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -33,12 +36,14 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import coil3.compose.AsyncImage
 import com.abhi.grocery.R
 import com.abhi.grocery.common.utils.sampleCartItemsList
 import com.abhi.grocery.common.utils.sampleItemsList
 import com.abhi.grocery.main.cart.domain.CartItem
 import com.abhi.grocery.main.home.domain.PricingUnit
 import com.abhi.grocery.main.home.domain.ProductItem
+import com.abhi.grocery.main.home.presentation.components.productImageFile
 import com.abhi.grocery.ui.theme.Geist
 
 @Composable
@@ -46,7 +51,8 @@ fun CartItemView(
     item: CartItem,
     modifier: Modifier = Modifier,
     onUpdateItem: (CartItem) -> Unit,
-    itemToEdit: MutableState<CartItem?>
+    itemToEdit: MutableState<CartItem?>,
+    context: Context
 ) {
     val quantity =
         if(item.product.pricingUnit == PricingUnit.PER_PIECE) {
@@ -63,6 +69,8 @@ fun CartItemView(
     // (price per kg) * (weight in kg)
     val amount = item.product.price * item.quantity
 
+    val imageFile = remember(item.product.imageName) { productImageFile(context, item.product.imageName) }
+
     Row(
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -74,12 +82,23 @@ fun CartItemView(
             )
             .padding(18.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_vendor_mode),
-            contentDescription = null,
-            modifier = Modifier
-                .size(45.dp)
-        )
+        if(imageFile != null && imageFile.exists()) {
+            AsyncImage(
+                model = imageFile,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(45.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Image(
+                painter = painterResource(R.drawable.ic_vendor_mode),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(45.dp)
+            )
+        }
 
         Column(
             verticalArrangement = Arrangement.spacedBy(5.dp)
@@ -279,5 +298,6 @@ fun PreviewCartItemView() {
         cartItem,
         onUpdateItem = {},
         itemToEdit = itemToEdit,
+        context = LocalContext.current
     )
 }

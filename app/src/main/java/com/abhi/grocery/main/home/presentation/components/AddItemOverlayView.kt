@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.abhi.grocery.R
 import com.abhi.grocery.common.utils.rememberScreenSize
 import com.abhi.grocery.common.utils.sampleItemsList
@@ -72,6 +74,8 @@ fun AddItemOverlayView(
     val pieceQuantity = remember { mutableIntStateOf(0) }
     val gramsQuantity = remember { mutableDoubleStateOf(0.0) } // stored in grams then converted to kg for UI
     val unit = remember { mutableStateOf(WeightUnit.G) }
+
+    val imageFile = remember(item.imageName) { productImageFile(context, item.imageName) }
 
     Box(
         modifier = Modifier
@@ -98,11 +102,23 @@ fun AddItemOverlayView(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_vendor_mode),
-                    contentDescription = "",
-                    modifier = Modifier.size(imageSize)
-                )
+                if(imageFile != null && imageFile.exists()) {
+                    AsyncImage(
+                        model = imageFile,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(imageSize)
+                            .clip(RoundedCornerShape(20.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(R.drawable.ic_vendor_mode),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(imageSize)
+                    )
+                }
 
                 Column(
 //                    modifier = Modifier.padding(top = 14.dp),

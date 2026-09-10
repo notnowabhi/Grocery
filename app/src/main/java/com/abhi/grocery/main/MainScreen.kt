@@ -71,7 +71,8 @@ fun MainScreen(
                 )
                 Tab.Cart -> CartTab(
                     viewModel = cartViewModel,
-                    onSpeak = { onSpeak(it) }
+                    onSpeak = { onSpeak(it) },
+                    context = context
                 )
                 Tab.Speaker -> SpeakerTab()
             }

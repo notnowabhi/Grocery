@@ -1,5 +1,6 @@
 package com.abhi.grocery.main.cart.presentation.screen
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +60,8 @@ import com.abhi.grocery.ui.theme.Geist
 @Composable
 fun CartTab(
     viewModel: CartViewModel,
-    onSpeak: (String) -> Unit
+    onSpeak: (String) -> Unit,
+    context: Context
 ) {
     val cartItems by viewModel.cartItems.collectAsState()
     val totalAmount = cartItems.sumOf {
@@ -81,7 +84,8 @@ fun CartTab(
                 modifier = Modifier.weight(1f),
                 cartItems = cartItems,
                 onUpdateItem = { viewModel.updateItem(it) },
-                itemToEdit = itemToEdit
+                itemToEdit = itemToEdit,
+                context = context
             )
 
             TotalAmountView(
@@ -117,7 +121,8 @@ private fun CartItemsView(
     modifier: Modifier,
     cartItems: List<CartItem>,
     onUpdateItem: (CartItem) -> Unit,
-    itemToEdit: MutableState<CartItem?>
+    itemToEdit: MutableState<CartItem?>,
+    context: Context
 ) {
     Column(
         modifier = modifier,
@@ -147,7 +152,8 @@ private fun CartItemsView(
                     item = item,
                     modifier = Modifier.animateItem(),
                     onUpdateItem = { onUpdateItem(it) },
-                    itemToEdit = itemToEdit
+                    itemToEdit = itemToEdit,
+                    context = context
                 )
             }
 
@@ -240,5 +246,5 @@ fun RecordPurchaseButton(
 fun PreviewCartTab() {
     val cartRepo: CartRepository = CartRepositoryImpl()
     val viewModel: CartViewModel = CartViewModel(cartRepo)
-    CartTab(viewModel, { })
+    CartTab(viewModel, { }, LocalContext.current)
 }

@@ -120,7 +120,7 @@ fun ProductItemVendorView(
     }
 }
 
-private fun productImageFile(context: Context, imageName: String): File? {
+fun productImageFile(context: Context, imageName: String): File? {
     if (imageName.isBlank()) return null
     return File(File(context.filesDir, "product_images"), imageName)
 }
