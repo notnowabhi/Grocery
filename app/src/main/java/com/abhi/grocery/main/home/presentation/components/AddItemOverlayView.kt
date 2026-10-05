@@ -1,7 +1,6 @@
 package com.abhi.grocery.main.home.presentation.components
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -163,9 +162,6 @@ fun AddItemOverlayView(
                             onAddItem = onAddItem,
                             onDismiss = onDismiss
                         )
-
-                        Toast.makeText(context, gramsQuantity.value.toString(), Toast.LENGTH_SHORT)
-                            .show()
                     }
                     .padding(vertical = 18.dp)
                     .fillMaxWidth(),

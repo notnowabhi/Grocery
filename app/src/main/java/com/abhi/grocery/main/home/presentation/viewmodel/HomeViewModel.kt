@@ -44,5 +44,10 @@ class HomeViewModel @Inject constructor(
     fun updateItemInInventory(item: ProductItem) =
         viewModelScope.launch {
             inventoryRepository.updateItem(item)
+            cartItems.value
+                .filter { it.product.id == item.id }
+                .forEach { cartItem ->
+                    cartRepository.updateItem(cartItem.copy(product = item))
+                }
         }
 }

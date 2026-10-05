@@ -66,6 +66,7 @@ fun MainScreen(
                     onSpeak = { onSpeak(it) },
                     onAddToCart = { homeViewModel.addItemToCart(it) },
                     onAddToInventory = { homeViewModel.addItemToInventory(it) },
+                    onUpdateInventory = { homeViewModel.updateItemInInventory(it) },
                     onRemoveFromInventory = { homeViewModel.removeItemFromInventory(it) },
                     context = context
                 )
@@ -74,7 +75,7 @@ fun MainScreen(
                     onSpeak = { onSpeak(it) },
                     context = context
                 )
-                Tab.Speaker -> SpeakerTab()
+//                Tab.Speaker -> SpeakerTab()
             }
         }
 
@@ -91,7 +92,7 @@ fun MainScreen(
 enum class Tab(val title: String, val iconId: Int) {
     Home("Home", R.drawable.ic_home),
     Cart("Cart", R.drawable.ic_cart),
-    Speaker("Speaker", R.drawable.ic_speaker)
+//    Speaker("Speaker", R.drawable.ic_speaker)
 }
 
 

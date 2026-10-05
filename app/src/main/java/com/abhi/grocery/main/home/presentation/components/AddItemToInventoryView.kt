@@ -1,6 +1,9 @@
 package com.abhi.grocery.main.home.presentation.components
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,6 +33,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,35 +57,60 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.core.content.FileProvider
 import coil3.compose.AsyncImage
 import com.abhi.grocery.R
+import com.abhi.grocery.common.utils.sampleItemsList
 import java.io.File
 import java.util.UUID
 
 @Composable
 fun AddItemToInventoryView(
     isVisible: MutableState<Boolean>,
+    initialType: StoreItemType,
     onAdd: (ProductItem) -> Unit // call this when submitting
 ) {
     val context = LocalContext.current
 
-    var type by remember { mutableStateOf<StoreItemType>(StoreItemType.Vegetables) }
-    var name by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
-    var pricingUnit by remember { mutableStateOf<PricingUnit>(PricingUnit.PER_KG) }
+    var typeName by rememberSaveable { mutableStateOf(initialType.name) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var price by rememberSaveable { mutableStateOf("") }
+    var pricingUnitName by rememberSaveable { mutableStateOf(PricingUnit.PER_KG.name) }
 
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    var pendingImageUri by remember { mutableStateOf<Uri?>(null) }
-    var pendingImageFile by remember { mutableStateOf<File?>(null) }
-    var capturedImageFileName by remember { mutableStateOf("") }
+    // kept across the camera app, otherwise a killed activity comes back with a blank photo
+    var capturedImageFileName by rememberSaveable { mutableStateOf("") }
+    var pendingImageFileName by rememberSaveable { mutableStateOf("") }
+    var hasCapturedImage by rememberSaveable { mutableStateOf(false) }
 
-    // registering the camera launcher
+    val type = StoreItemType.valueOf(typeName)
+    val pricingUnit = PricingUnit.valueOf(pricingUnitName)
+    val capturedImageFile = if(hasCapturedImage) {
+        productImageFile(context, capturedImageFileName)?.takeIf { it.exists() && it.length() > 0L }
+    } else {
+        null
+    }
+    val canAdd = name.isNotBlank() && price.toDoubleOrNull() != null
+
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
-        if (success && pendingImageFile != null) {
-            // capture succeeded — the file now has real image bytes on disk
-            capturedImageFileName = pendingImageFile!!.name  // e.g. "3f2a1e...jpg"
-            imageUri = pendingImageUri
+        val pendingFile = productImageFile(context, pendingImageFileName)
+        if(success && pendingFile != null && pendingFile.exists() && pendingFile.length() > 0L) {
+            if(capturedImageFileName.isNotBlank() && capturedImageFileName != pendingImageFileName) {
+                productImageFile(context, capturedImageFileName)?.delete()
+            }
+            capturedImageFileName = pendingImageFileName
+            hasCapturedImage = true
+        } else {
+            // cancelled or the camera wrote nothing — don't keep an empty file
+            pendingFile?.delete()
         }
+        pendingImageFileName = ""
+    }
+
+    fun close(deleteCapture: Boolean) {
+        productImageFile(context, pendingImageFileName)?.delete()
+        if(deleteCapture) {
+            productImageFile(context, capturedImageFileName)?.delete()
+        }
+        isVisible.value = false
     }
 
     Box(
@@ -89,7 +118,7 @@ fun AddItemToInventoryView(
             .fillMaxSize()
             .background(color = Color.Black.copy(alpha = 0.3f))
             .imePadding()
-            .clickable { isVisible.value = false }
+            .clickable { close(deleteCapture = true) }
             .padding(horizontal = 45.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -106,19 +135,22 @@ fun AddItemToInventoryView(
         ) {
             StoreItemTypeSelectorView(
                 selectedItem = type,
-                onTypeChange = { type = it }
+                onTypeChange = { typeName = it.name }
             )
 
             Spacer(Modifier.height(30.dp))
 
             ImageBox(
-                imageUri = imageUri
+                imageFile = capturedImageFile
             ) {
                 val file = createImageFile(context)
-                pendingImageFile = file
-                val uri = getUriForFile(context, file)
-                pendingImageUri = uri
-                cameraLauncher.launch(uri)
+                pendingImageFileName = file.name
+                try {
+                    cameraLauncher.launch(cameraOutputUri(context, file))
+                } catch(_: ActivityNotFoundException) {
+                    file.delete()
+                    pendingImageFileName = ""
+                }
             }
 
             Spacer(Modifier.height(8.dp))
@@ -129,25 +161,160 @@ fun AddItemToInventoryView(
                 onNameChange = { name = it },
                 price = price,
                 onPriceChange = { price = it },
-                onPricingUnitChange = { pricingUnit = it }
+                pricingUnit = pricingUnit,
+                onPricingUnitChange = { pricingUnitName = it.name }
             )
 
             Spacer(Modifier.height(30.dp))
 
-            AddItemButton {
+            AddItemButton(
+                label = "Add Item",
+                enabled = canAdd
+            ) {
+                val parsedPrice = price.toDoubleOrNull()
+                if(name.isBlank() || parsedPrice == null) return@AddItemButton
+
                 onAdd(
                     ProductItem(
                         id = UUID.randomUUID().toString(),
-                        name = name,
-                        hindiName = name,
-                        imageName = capturedImageFileName,
-                        price = price.toDoubleOrNull() ?: 0.0,
+                        name = name.trim(),
+                        hindiName = name.trim(),
+                        imageName = if(capturedImageFile != null) capturedImageFileName else "",
+                        price = parsedPrice,
                         pricingUnit = pricingUnit,
                         productType = type
                     )
                 )
 
-                isVisible.value = false
+                close(deleteCapture = false)
+            }
+        }
+    }
+}
+
+@Composable
+fun EditItemInInventoryView(
+    item: ProductItem,
+    onSave: (ProductItem) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+
+    var typeName by rememberSaveable(item.id) { mutableStateOf(item.productType.name) }
+    var name by rememberSaveable(item.id) { mutableStateOf(item.name) }
+    var price by rememberSaveable(item.id) { mutableStateOf(priceFieldText(item.price)) }
+    var pricingUnitName by rememberSaveable(item.id) { mutableStateOf(item.pricingUnit.name) }
+
+    var imageFileName by rememberSaveable(item.id) { mutableStateOf(item.imageName) }
+    var pendingImageFileName by rememberSaveable(item.id) { mutableStateOf("") }
+
+    val type = StoreItemType.valueOf(typeName)
+    val pricingUnit = PricingUnit.valueOf(pricingUnitName)
+    val previewFile = productImageFile(context, imageFileName)
+        ?.takeIf { it.exists() && it.length() > 0L }
+    val canSave = name.isNotBlank() && price.toDoubleOrNull() != null
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        val pendingFile = productImageFile(context, pendingImageFileName)
+        if(success && pendingFile != null && pendingFile.exists() && pendingFile.length() > 0L) {
+            // drop the replacement photo, and leave the original until Save
+            if(imageFileName.isNotBlank() && imageFileName != item.imageName && imageFileName != pendingImageFileName) {
+                productImageFile(context, imageFileName)?.delete()
+            }
+            imageFileName = pendingImageFileName
+        } else {
+            pendingFile?.delete()
+        }
+        pendingImageFileName = ""
+    }
+
+    fun close(discardNewPhoto: Boolean) {
+        productImageFile(context, pendingImageFileName)?.delete()
+        if(discardNewPhoto && imageFileName != item.imageName) {
+            productImageFile(context, imageFileName)?.delete()
+        }
+        onDismiss()
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black.copy(alpha = 0.3f))
+            .imePadding()
+            .clickable { close(discardNewPhoto = true) }
+            .padding(horizontal = 45.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    shape = RoundedCornerShape(30.dp),
+                    color = Color.White
+                )
+                .clip(shape = RoundedCornerShape(30.dp))
+                .clickable {}
+                .padding(30.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            StoreItemTypeSelectorView(
+                selectedItem = type,
+                onTypeChange = { typeName = it.name }
+            )
+
+            Spacer(Modifier.height(30.dp))
+
+            ImageBox(
+                imageFile = previewFile
+            ) {
+                val file = createImageFile(context)
+                pendingImageFileName = file.name
+                try {
+                    cameraLauncher.launch(cameraOutputUri(context, file))
+                } catch(_: ActivityNotFoundException) {
+                    file.delete()
+                    pendingImageFileName = ""
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            TextFields(
+                type = type,
+                name = name,
+                onNameChange = { name = it },
+                price = price,
+                onPriceChange = { price = it },
+                pricingUnit = pricingUnit,
+                onPricingUnitChange = { pricingUnitName = it.name }
+            )
+
+            Spacer(Modifier.height(30.dp))
+
+            AddItemButton(
+                label = "Save",
+                enabled = canSave
+            ) {
+                val parsedPrice = price.toDoubleOrNull()
+                if(name.isBlank() || parsedPrice == null) return@AddItemButton
+
+                if(imageFileName != item.imageName) {
+                    productImageFile(context, item.imageName)?.delete()
+                }
+
+                onSave(
+                    item.copy(
+                        name = name.trim(),
+                        hindiName = if(item.hindiName == item.name) name.trim() else item.hindiName,
+                        imageName = imageFileName,
+                        price = parsedPrice,
+                        pricingUnit = pricingUnit,
+                        productType = type
+                    )
+                )
+
+                close(discardNewPhoto = false)
             }
         }
     }
@@ -160,11 +327,11 @@ private fun TextFields(
     onNameChange: (String) -> Unit,
     price: String,
     onPriceChange: (String) -> Unit,
+    pricingUnit: PricingUnit,
     onPricingUnitChange: (PricingUnit) -> Unit,
 ) {
     var dropdownExpanded by remember { mutableStateOf(false) }
-    var pricingIndex by remember { mutableStateOf<Int>(0) }
-    
+
     Column(
         verticalArrangement = Arrangement.spacedBy(7.dp)
     ) {
@@ -249,7 +416,7 @@ private fun TextFields(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = PricingUnit.entries[pricingIndex].title,
+                            text = pricingUnit.title,
                             fontFamily = Geist,
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp,
@@ -275,22 +442,21 @@ private fun TextFields(
                     expanded = dropdownExpanded,
                     onDismissRequest = { dropdownExpanded = false },
                 ) {
-                    PricingUnit.entries.forEachIndexed { index, entry ->
+                    PricingUnit.entries.forEach { entry ->
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    text = entry.unit,
+                                    text = entry.title,
                                     fontFamily = Geist,
                                     fontWeight = FontWeight.Medium,
                                     fontSize = 12.sp,
                                     lineHeight = 14.4.sp,
-                                    color = Color(0xFFD9D9D9),
+                                    color = Color(0xFF212121),
                                     textAlign = TextAlign.Center,
                                 )
                             },
                             onClick = {
-                                pricingIndex = index
-                                onPricingUnitChange(PricingUnit.entries[index])
+                                onPricingUnitChange(entry)
                                 dropdownExpanded = false
                             },
                         )
@@ -303,7 +469,7 @@ private fun TextFields(
 
 @Composable
 private fun ImageBox(
-    imageUri: Uri?,
+    imageFile: File?,
     onClick: () -> Unit
 ) {
     Box(
@@ -318,9 +484,9 @@ private fun ImageBox(
             .clickable{ onClick() },
         contentAlignment = Alignment.Center
     ) {
-        if(imageUri != null) {
+        if(imageFile != null) {
             AsyncImage(
-                model = imageUri,
+                model = imageFile,
                 contentDescription = null,
                 modifier = Modifier
                     .size(140.dp)
@@ -342,10 +508,12 @@ private fun ImageBox(
 
 @Composable
 private fun AddItemButton(
+    label: String,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     Text(
-        text = "Add Item",
+        text = label,
         fontFamily = Geist,
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp,
@@ -353,33 +521,65 @@ private fun AddItemButton(
         textAlign = TextAlign.Center,
         modifier = Modifier
             .clip(RoundedCornerShape(50))
-            .background(Color(0xFF749CF8))
+            .background(Color(0xFF749CF8).copy(alpha = if(enabled) 1f else 0.4f))
             .clickable{ onClick() }
             .padding(vertical = 16.dp)
             .fillMaxWidth()
     )
 }
 
+private fun priceFieldText(price: Double): String {
+    return if(price % 1.0 == 0.0) price.toInt().toString() else price.toString()
+}
+
 private fun createImageFile(context: Context): File {
     val imagesDir = File(context.filesDir, "product_images")
     if (!imagesDir.exists()) imagesDir.mkdirs()
-    return File(imagesDir, "${UUID.randomUUID()}.jpg")
+    val file = File(imagesDir, "${UUID.randomUUID()}.jpg")
+    file.createNewFile()
+    return file
 }
 
-private fun getUriForFile(context: Context, file: File): Uri {
-    return FileProvider.getUriForFile(
+private fun cameraOutputUri(context: Context, file: File): Uri {
+    val uri = FileProvider.getUriForFile(
         context,
         "${context.packageName}.fileprovider",
         file
     )
+
+    // hand the camera app write access to this exact file
+    val captureIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+    val activities = context.packageManager.queryIntentActivities(
+        captureIntent,
+        PackageManager.MATCH_DEFAULT_ONLY
+    )
+    for(info in activities) {
+        context.grantUriPermission(
+            info.activityInfo.packageName,
+            uri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+    }
+    return uri
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewAddItemToInventoryView() {
-    val isAddItemToInventoryViewVisible = remember { mutableStateOf<Boolean>(false) }
+    val isAddItemToInventoryViewVisible = remember { mutableStateOf(false) }
     AddItemToInventoryView(
         isAddItemToInventoryViewVisible,
+        StoreItemType.Vegetables,
         {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewEditItemInInventoryView() {
+    EditItemInInventoryView(
+        item = sampleItemsList[0],
+        onSave = {},
+        onDismiss = {}
     )
 }

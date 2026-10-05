@@ -2,7 +2,6 @@ package com.abhi.grocery.main.home.presentation.screen
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateColorAsState
@@ -34,6 +33,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,19 +49,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abhi.grocery.R
-import com.abhi.grocery.common.utils.sampleItemsList
 import com.abhi.grocery.main.HomeTabMode
 import com.abhi.grocery.main.MainScreen
 import com.abhi.grocery.main.cart.data.repository.CartRepositoryImpl
 import com.abhi.grocery.main.cart.domain.CartItem
 import com.abhi.grocery.main.cart.domain.repository.CartRepository
 import com.abhi.grocery.main.cart.presentation.viewmodel.CartViewModel
-import com.abhi.grocery.main.home.data.repository.InventoryRepositoryImpl
 import com.abhi.grocery.main.home.data.repository.PreviewInventoryRepository
 import com.abhi.grocery.main.home.domain.ProductItem
 import com.abhi.grocery.main.home.domain.repository.InventoryRepository
 import com.abhi.grocery.main.home.presentation.components.AddItemOverlayView
 import com.abhi.grocery.main.home.presentation.components.AddItemToInventoryView
+import com.abhi.grocery.main.home.presentation.components.EditItemInInventoryView
 import com.abhi.grocery.main.home.presentation.components.InventoryListCustomerView
 import com.abhi.grocery.main.home.presentation.components.InventoryListVendorView
 import com.abhi.grocery.main.home.presentation.viewmodel.HomeViewModel
@@ -80,6 +79,7 @@ fun HomeTab(
     onSpeak: (String) -> Unit,
     onAddToCart: (CartItem) -> Unit,
     onAddToInventory: (ProductItem) -> Unit,
+    onUpdateInventory: (ProductItem) -> Unit,
     onRemoveFromInventory: (String) -> Unit,
     context: Context
 ) {
@@ -88,15 +88,23 @@ fun HomeTab(
     var time by remember { mutableStateOf(LocalTime.now()) }
 
     val customerSelectedItem = remember { mutableStateOf<ProductItem?>(null) }
+    val vendorSelectedItem = remember { mutableStateOf<ProductItem?>(null) }
 
-    val isAddItemToInventoryViewVisible = remember { mutableStateOf<Boolean>(false) }
-    val isRemoveItemFromInventoryActive = remember { mutableStateOf<Boolean>(false) }
+    val isAddItemToInventoryViewVisible = rememberSaveable { mutableStateOf(false) }
+    val isRemoveItemFromInventoryActive = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         while (true) {
             val now = LocalTime.now()
             time = now
             delay((60 - now.second) * 1000L)
+        }
+    }
+
+    LaunchedEffect(mode) {
+        if(mode != HomeTabMode.Vendor) {
+            isRemoveItemFromInventoryActive.value = false
+            vendorSelectedItem.value = null
         }
     }
 
@@ -128,18 +136,40 @@ fun HomeTab(
                     onVendorItemTypeChange = {vendorSelectedItemType = it},
                     onCustomerItemTypeChange = {customerSelectedItemType = it},
                     onSpeak = { onSpeak(it) },
-                    onAddItemClick = { isAddItemToInventoryViewVisible.value = true },
-                    onRemoveItemClick = { isRemoveItemFromInventoryActive.value = true },
+                    onAddItemClick = {
+                        isRemoveItemFromInventoryActive.value = false
+                        isAddItemToInventoryViewVisible.value = true
+                    },
+                    onRemoveItemClick = {
+                        isRemoveItemFromInventoryActive.value = !isRemoveItemFromInventoryActive.value
+                    },
+                    isRemoveActive = isRemoveItemFromInventoryActive.value,
+                    onVendorItemClick = { product ->
+                        if(isRemoveItemFromInventoryActive.value) {
+                            onRemoveFromInventory(product.id)
+                        } else {
+                            vendorSelectedItem.value = product
+                        }
+                    },
                     context = context
                 )
-
-                if(isAddItemToInventoryViewVisible.value) {
-                    AddItemToInventoryView(
-                        isVisible = isAddItemToInventoryViewVisible,
-                        onAdd = { onAddToInventory(it) }
-                    )
-                }
             }
+        }
+
+        if(isAddItemToInventoryViewVisible.value) {
+            AddItemToInventoryView(
+                isVisible = isAddItemToInventoryViewVisible,
+                initialType = vendorSelectedItemType,
+                onAdd = { onAddToInventory(it) }
+            )
+        }
+
+        vendorSelectedItem.value?.let { item ->
+            EditItemInInventoryView(
+                item = item,
+                onSave = { onUpdateInventory(it) },
+                onDismiss = { vendorSelectedItem.value = null }
+            )
         }
 
         customerSelectedItem.value?.let { item ->
@@ -169,6 +199,8 @@ private fun AddItemsStateView(
     onSpeak: (String) -> Unit,
     onAddItemClick: () -> Unit,
     onRemoveItemClick: () -> Unit,
+    isRemoveActive: Boolean,
+    onVendorItemClick: (ProductItem) -> Unit,
     context: Context
 ) {
     Column(
@@ -190,7 +222,7 @@ private fun AddItemsStateView(
         ) { targetMode ->
             if(targetMode == HomeTabMode.Customer) {
                 CustomerAddItemsView(
-                    inventory,
+                    inventory.filter { it.productType == customerSelectedItemType },
                     customerSelectedItem,
                     customerSelectedItemType,
                     onCustomerItemTypeChange,
@@ -199,11 +231,13 @@ private fun AddItemsStateView(
                 )
             } else if(targetMode == HomeTabMode.Vendor) {
                 VendorAddItemsView(
-                    inventory,
+                    inventory.filter { it.productType == vendorSelectedItemType },
                     vendorSelectedItemType,
                     onVendorItemTypeChange,
                     onAddItemClick = onAddItemClick,
                     onRemoveItemClick = onRemoveItemClick,
+                    isRemoveActive = isRemoveActive,
+                    onVendorItemClick = onVendorItemClick,
                     context
                 )
             }
@@ -260,6 +294,8 @@ private fun VendorAddItemsView(
     onVendorItemTypeChange: (StoreItemType) -> Unit,
     onAddItemClick: () -> Unit,
     onRemoveItemClick: () -> Unit,
+    isRemoveActive: Boolean,
+    onVendorItemClick: (ProductItem) -> Unit,
     context: Context
 ) {
     Box() {
@@ -289,7 +325,9 @@ private fun VendorAddItemsView(
 
             InventoryListVendorView(
                 products = products,
-                context = context
+                context = context,
+                isRemoveActive = isRemoveActive,
+                onItemClick = onVendorItemClick
             )
         }
 
@@ -300,7 +338,11 @@ private fun VendorAddItemsView(
         ) {
             Spacer(modifier = Modifier.weight(1f))
 
-            AddItemsButtons(onAddItemClick, onRemoveItemClick)
+            AddItemsButtons(
+                onAddItemClick = onAddItemClick,
+                onRemoveItemClick = onRemoveItemClick,
+                isRemoveActive = isRemoveActive
+            )
         }
 
     }
@@ -309,7 +351,8 @@ private fun VendorAddItemsView(
 @Composable
 private fun AddItemsButtons(
     onAddItemClick: () -> Unit,
-    onRemoveItemClick: () -> Unit
+    onRemoveItemClick: () -> Unit,
+    isRemoveActive: Boolean
 ) {
     Row(
         modifier = Modifier.fillMaxWidth()
@@ -317,13 +360,14 @@ private fun AddItemsButtons(
         Icon(
             painter = painterResource(R.drawable.ic_minus),
             contentDescription = null,
+            tint = if(isRemoveActive) Color.White else Color.Black,
             modifier = Modifier
                 .shadow(
                     elevation = 10.dp,
                     shape = CircleShape
                 )
                 .clip(CircleShape)
-                .background(Color.White)
+                .background(if(isRemoveActive) Color(0xFFDA585B) else Color.White)
                 .clickable { onRemoveItemClick() }
                 .padding(12.dp)
         )

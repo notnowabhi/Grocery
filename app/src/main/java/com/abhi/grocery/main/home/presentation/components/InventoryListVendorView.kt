@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.abhi.grocery.main.home.domain.ProductItem
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,9 @@ import com.abhi.grocery.main.home.data.repository.PreviewInventoryRepository
 @Composable
 fun InventoryListVendorView(
     products: List<ProductItem>,
-    context: Context
+    context: Context,
+    onItemClick: (ProductItem) -> Unit = {},
+    isRemoveActive: Boolean = false,
 ) {
     val density = LocalDensity.current.density
 
@@ -45,8 +48,16 @@ fun InventoryListVendorView(
             Spacer(modifier = Modifier.height(30.dp))
         }
 
-        items(products) { product ->
-            ProductItemVendorView(product, { }, context)
+        items(
+            items = products,
+            key = { it.id }
+        ) { product ->
+            ProductItemVendorView(
+                productItem = product,
+                onClick = onItemClick,
+                context = context,
+                borderColor = if(isRemoveActive) Color(0xFFDA585B) else Color(0xffd9d9d9)
+            )
         }
 
         item(span = { GridItemSpan(maxLineSpan) }) {

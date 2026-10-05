@@ -38,7 +38,8 @@ import java.io.File
 fun ProductItemVendorView(
     productItem: ProductItem,
     onClick: (ProductItem) -> Unit,
-    context: Context
+    context: Context,
+    borderColor: Color = Color(0xffd9d9d9),
 ) {
     val screenSize = rememberScreenSize()
     val cardWidth: Dp = (screenSize.width - (40.dp + 7.dp)) / 2
@@ -53,12 +54,11 @@ fun ProductItemVendorView(
             .clip(shape = RoundedCornerShape(30.dp))
             .border(
                 width = 1.dp,
-                color = Color(0xffd9d9d9),
+                color = borderColor,
                 shape = RoundedCornerShape(30.dp)
             )
             .clickable{
                 onClick(productItem)
-                // add item to cart from this click. pass in the item
             }
             .padding(horizontal = 20.dp)
             .padding(vertical = 35.dp),
