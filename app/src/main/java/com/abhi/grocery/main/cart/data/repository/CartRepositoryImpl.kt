@@ -1,20 +1,15 @@
 package com.abhi.grocery.main.cart.data.repository
 
-import com.abhi.grocery.common.utils.sampleCartItemsList
-import com.abhi.grocery.common.utils.sampleItemsList
 import com.abhi.grocery.main.cart.domain.CartItem
 import com.abhi.grocery.main.cart.domain.repository.CartRepository
-import com.abhi.grocery.main.home.domain.PricingUnit
-import com.abhi.grocery.main.home.domain.ProductItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
-import kotlin.collections.plus
 
 class CartRepositoryImpl @Inject constructor() : CartRepository {
-    private val _cartItems = MutableStateFlow<List<CartItem>>(sampleCartItemsList)
+    private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     override val cartItems: StateFlow<List<CartItem>> = _cartItems.asStateFlow()
 
     override fun addItem(item: CartItem) {

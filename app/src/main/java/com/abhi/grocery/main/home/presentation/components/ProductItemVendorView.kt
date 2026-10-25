@@ -122,7 +122,13 @@ fun ProductItemVendorView(
 
 fun productImageFile(context: Context, imageName: String): File? {
     if (imageName.isBlank()) return null
-    return File(File(context.filesDir, "product_images"), imageName)
+    val directory = File(context.filesDir, "product_images")
+    val exact = File(directory, imageName)
+    if (exact.exists()) return exact
+    // catalog photos are stored as name.jpg, camera photos keep the full file name
+    val withJpg = File(directory, "$imageName.jpg")
+    if (withJpg.exists()) return withJpg
+    return null
 }
 
 @Preview (showBackground = true)
