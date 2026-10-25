@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -53,13 +54,18 @@ fun InventoryListCustomerView(
             Spacer(modifier = Modifier.height(30.dp))
         }
 
-        items(products) { product ->
-            ProductItemCustomerView(
-                product,
-                { customerSelectedItem.value = product },
-                { onSpeak(it) },
-                context
-            )
+        items(
+            items = products,
+            key = { it.id }
+        ) { product ->
+            Box(Modifier.animateItem()) {
+                ProductItemCustomerView(
+                    product,
+                    { customerSelectedItem.value = product },
+                    { onSpeak(it) },
+                    context
+                )
+            }
         }
 
         item(span = { GridItemSpan(maxLineSpan) }) {

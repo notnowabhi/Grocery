@@ -7,6 +7,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -57,6 +62,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.core.content.FileProvider
 import coil3.compose.AsyncImage
 import com.abhi.grocery.R
+import com.abhi.grocery.common.utils.FadeInOut
 import com.abhi.grocery.common.utils.sampleItemsList
 import java.io.File
 import java.util.UUID
@@ -351,7 +357,7 @@ private fun TextFields(
                         .fillMaxWidth(),
                 )
 
-                if(name.isEmpty()) {
+                FadeInOut(visible = name.isEmpty()) {
                     Text(
                         text = "Enter name of " + type.name,
                         fontFamily = Geist,
@@ -388,7 +394,7 @@ private fun TextFields(
                         singleLine = true
                     )
 
-                    if(price.isEmpty()) {
+                    FadeInOut(visible = price.isEmpty()) {
                         Text(
                             text = "Enter price",
                             fontFamily = Geist,
@@ -441,6 +447,10 @@ private fun TextFields(
                 DropdownMenu(
                     expanded = dropdownExpanded,
                     onDismissRequest = { dropdownExpanded = false },
+                    containerColor = Color.White,
+                    tonalElevation = 0.dp,
+                    shadowElevation = 4.dp,
+                    shape = RoundedCornerShape(16.dp),
                 ) {
                     PricingUnit.entries.forEach { entry ->
                         DropdownMenuItem(
@@ -484,24 +494,32 @@ private fun ImageBox(
             .clickable{ onClick() },
         contentAlignment = Alignment.Center
     ) {
-        if(imageFile != null) {
-            AsyncImage(
-                model = imageFile,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(140.dp)
-                    .clip(RoundedCornerShape(20.dp)),
-                contentScale = ContentScale.Crop,
-            )
-        } else {
-            Text(
-                text = "Click to add image",
-                fontFamily = Geist,
-                fontWeight = FontWeight.Light,
-                fontSize = 10.sp,
-                color = Color.Black.copy(alpha = 0.21f),
-                textAlign = TextAlign.Center,
-            )
+        AnimatedContent(
+            targetState = imageFile,
+            transitionSpec = {
+                fadeIn(tween(300)) togetherWith fadeOut(tween(300)) using null
+            },
+            label = "capturedPhoto"
+        ) { file ->
+            if(file != null) {
+                AsyncImage(
+                    model = file,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(140.dp)
+                        .clip(RoundedCornerShape(20.dp)),
+                    contentScale = ContentScale.Crop,
+                )
+            } else {
+                Text(
+                    text = "Click to add image",
+                    fontFamily = Geist,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 10.sp,
+                    color = Color.Black.copy(alpha = 0.21f),
+                    textAlign = TextAlign.Center,
+                )
+            }
         }
     }
 }

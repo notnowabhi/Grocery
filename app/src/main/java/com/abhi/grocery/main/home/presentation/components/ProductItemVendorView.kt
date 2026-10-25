@@ -1,6 +1,8 @@
 package com.abhi.grocery.main.home.presentation.components
 
 import android.content.Context
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,6 +50,11 @@ fun ProductItemVendorView(
     val amountString = "₹" + productItem.price.toString()
 
     val imageFile = remember(productItem.imageName) { productImageFile(context, productItem.imageName) }
+    val animatedBorder by animateColorAsState(
+        targetValue = borderColor,
+        animationSpec = tween(300),
+        label = "vendorCardBorder"
+    )
 
     Column(
         modifier = Modifier
@@ -54,7 +62,7 @@ fun ProductItemVendorView(
             .clip(shape = RoundedCornerShape(30.dp))
             .border(
                 width = 1.dp,
-                color = borderColor,
+                color = animatedBorder,
                 shape = RoundedCornerShape(30.dp)
             )
             .clickable{

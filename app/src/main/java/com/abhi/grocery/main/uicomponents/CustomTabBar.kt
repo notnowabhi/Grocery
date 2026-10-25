@@ -1,8 +1,11 @@
 package com.abhi.grocery.main.uicomponents
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -74,10 +77,16 @@ fun TabItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isSelected) Color.White else Color(0xFFCCCCCC),
+        animationSpec = tween(300),
+        label = "tabColor"
+    )
+
     Row(
         modifier = modifier
             .background(
-                color = if (isSelected) Color.White else Color(0xFFCCCCCC),
+                color = backgroundColor,
                 shape = RoundedCornerShape(50)
             )
             .clickable{onClick()}
@@ -95,14 +104,17 @@ fun TabItem(
                 .size(16.dp)
         )
 
-        if(isSelected) {
+        AnimatedVisibility(
+            visible = isSelected,
+            enter = fadeIn(tween(300)),
+            exit = fadeOut(tween(200))
+        ) {
             Text(
                 text = title,
                 fontFamily = Geist,
                 fontWeight = FontWeight.Light,
                 fontSize = 12.sp,
                 lineHeight = 12.sp,
-
             )
         }
     }

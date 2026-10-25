@@ -1,6 +1,11 @@
 package com.abhi.grocery.main.home.presentation.components
 
 import android.content.Context
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -289,12 +294,20 @@ private fun EnterWeightQuantityView(
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = unit.value.toString().lowercase(),
-                    fontFamily = Geist,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
-                )
+                AnimatedContent(
+                    targetState = unit.value,
+                    transitionSpec = {
+                        fadeIn(tween(200)) togetherWith fadeOut(tween(200)) using null
+                    },
+                    label = "weightUnit"
+                ) { weightUnit ->
+                    Text(
+                        text = weightUnit.toString().lowercase(),
+                        fontFamily = Geist,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp
+                    )
+                }
 
                 Image(
                     painter = painterResource(R.drawable.ic_recycle),

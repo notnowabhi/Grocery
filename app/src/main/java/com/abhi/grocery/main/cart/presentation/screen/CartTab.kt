@@ -2,9 +2,11 @@ package com.abhi.grocery.main.cart.presentation.screen
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -45,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abhi.grocery.R
+import com.abhi.grocery.common.utils.FadingOverlay
 import com.abhi.grocery.common.utils.topFadingEdge
 import com.abhi.grocery.common.utils.verticalFadingEdge
 import com.abhi.grocery.main.cart.data.repository.CartRepositoryImpl
@@ -101,7 +104,7 @@ fun CartTab(
             Spacer(Modifier.height(110.dp))
         }
 
-        itemToEdit.value?.let { item ->
+        FadingOverlay(value = itemToEdit.value) { item ->
             AddWeightOverlayView(
                 item = item,
                 onDone = { cartItem->
@@ -205,15 +208,23 @@ private fun TotalAmountView(
                 )
             }
 
-            Text(
-                text = "₹$totalAmount",
-                fontFamily = Geist,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 38.sp,
-                color = Color(0xFFDA585B),
-                modifier = Modifier
-                    .padding(bottom = 23.dp)
-            )
+            AnimatedContent(
+                targetState = totalAmount,
+                transitionSpec = {
+                    fadeIn(tween(200)) togetherWith fadeOut(tween(200)) using null
+                },
+                label = "cartTotal"
+            ) { amount ->
+                Text(
+                    text = "₹$amount",
+                    fontFamily = Geist,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 38.sp,
+                    color = Color(0xFFDA585B),
+                    modifier = Modifier
+                        .padding(bottom = 23.dp)
+                )
+            }
         }
     }
 }

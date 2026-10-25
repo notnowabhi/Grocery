@@ -3,6 +3,7 @@ package com.abhi.grocery.main.home.presentation.components
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -52,12 +53,14 @@ fun InventoryListVendorView(
             items = products,
             key = { it.id }
         ) { product ->
-            ProductItemVendorView(
-                productItem = product,
-                onClick = onItemClick,
-                context = context,
-                borderColor = if(isRemoveActive) Color(0xFFDA585B) else Color(0xffd9d9d9)
-            )
+            Box(Modifier.animateItem()) {
+                ProductItemVendorView(
+                    productItem = product,
+                    onClick = onItemClick,
+                    context = context,
+                    borderColor = if(isRemoveActive) Color(0xFFDA585B) else Color(0xffd9d9d9)
+                )
+            }
         }
 
         item(span = { GridItemSpan(maxLineSpan) }) {

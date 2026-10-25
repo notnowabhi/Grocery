@@ -7,6 +7,7 @@ import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -49,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abhi.grocery.R
+import com.abhi.grocery.common.utils.FadingOverlay
 import com.abhi.grocery.main.HomeTabMode
 import com.abhi.grocery.main.MainScreen
 import com.abhi.grocery.main.cart.data.repository.CartRepositoryImpl
@@ -156,7 +158,7 @@ fun HomeTab(
             }
         }
 
-        if(isAddItemToInventoryViewVisible.value) {
+        FadingOverlay(visible = isAddItemToInventoryViewVisible.value) {
             AddItemToInventoryView(
                 isVisible = isAddItemToInventoryViewVisible,
                 initialType = vendorSelectedItemType,
@@ -164,7 +166,7 @@ fun HomeTab(
             )
         }
 
-        vendorSelectedItem.value?.let { item ->
+        FadingOverlay(value = vendorSelectedItem.value) { item ->
             EditItemInInventoryView(
                 item = item,
                 onSave = { onUpdateInventory(it) },
@@ -172,7 +174,7 @@ fun HomeTab(
             )
         }
 
-        customerSelectedItem.value?.let { item ->
+        FadingOverlay(value = customerSelectedItem.value) { item ->
             AddItemOverlayView(
                 item = item,
                 onAddItem = { cartItem->
@@ -222,7 +224,7 @@ private fun AddItemsStateView(
         ) { targetMode ->
             if(targetMode == HomeTabMode.Customer) {
                 CustomerAddItemsView(
-                    inventory.filter { it.productType == customerSelectedItemType },
+                    inventory,
                     customerSelectedItem,
                     customerSelectedItemType,
                     onCustomerItemTypeChange,
@@ -231,7 +233,7 @@ private fun AddItemsStateView(
                 )
             } else if(targetMode == HomeTabMode.Vendor) {
                 VendorAddItemsView(
-                    inventory.filter { it.productType == vendorSelectedItemType },
+                    inventory,
                     vendorSelectedItemType,
                     onVendorItemTypeChange,
                     onAddItemClick = onAddItemClick,
@@ -247,7 +249,7 @@ private fun AddItemsStateView(
 
 @Composable
 private fun CustomerAddItemsView(
-    products: List<ProductItem>,
+    inventory: List<ProductItem>,
     customerSelectedItem: MutableState<ProductItem?>,
     selectedItemType: StoreItemType,
     onCustomerItemTypeChange: (StoreItemType) -> Unit,
@@ -278,18 +280,27 @@ private fun CustomerAddItemsView(
             onTypeChange = onCustomerItemTypeChange,
         )
 
-        InventoryListCustomerView(
-            products = products,
-            customerSelectedItem = customerSelectedItem,
-            onSpeak = { onSpeak(it) },
-            context = context,
-        )
+        AnimatedContent(
+            targetState = selectedItemType,
+            transitionSpec = {
+                fadeIn(animationSpec = tween(300)) togetherWith
+                        fadeOut(animationSpec = tween(300)) using null
+            },
+            label = "customerProducts"
+        ) { type ->
+            InventoryListCustomerView(
+                products = inventory.filter { it.productType == type },
+                customerSelectedItem = customerSelectedItem,
+                onSpeak = { onSpeak(it) },
+                context = context,
+            )
+        }
     }
 }
 
 @Composable
 private fun VendorAddItemsView(
-    products: List<ProductItem>,
+    inventory: List<ProductItem>,
     selectedItemType: StoreItemType,
     onVendorItemTypeChange: (StoreItemType) -> Unit,
     onAddItemClick: () -> Unit,
@@ -323,12 +334,21 @@ private fun VendorAddItemsView(
                 onTypeChange = onVendorItemTypeChange,
             )
 
-            InventoryListVendorView(
-                products = products,
-                context = context,
-                isRemoveActive = isRemoveActive,
-                onItemClick = onVendorItemClick
-            )
+            AnimatedContent(
+                targetState = selectedItemType,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(300)) togetherWith
+                            fadeOut(animationSpec = tween(300)) using null
+                },
+                label = "vendorProducts"
+            ) { type ->
+                InventoryListVendorView(
+                    products = inventory.filter { it.productType == type },
+                    context = context,
+                    isRemoveActive = isRemoveActive,
+                    onItemClick = onVendorItemClick
+                )
+            }
         }
 
         Column(
@@ -357,17 +377,28 @@ private fun AddItemsButtons(
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
+        val removeColor by animateColorAsState(
+            targetValue = if(isRemoveActive) Color(0xFFDA585B) else Color.White,
+            animationSpec = tween(300),
+            label = "removeButtonColor"
+        )
+        val removeIconColor by animateColorAsState(
+            targetValue = if(isRemoveActive) Color.White else Color.Black,
+            animationSpec = tween(300),
+            label = "removeIconColor"
+        )
+
         Icon(
             painter = painterResource(R.drawable.ic_minus),
             contentDescription = null,
-            tint = if(isRemoveActive) Color.White else Color.Black,
+            tint = removeIconColor,
             modifier = Modifier
                 .shadow(
                     elevation = 10.dp,
                     shape = CircleShape
                 )
                 .clip(CircleShape)
-                .background(if(isRemoveActive) Color(0xFFDA585B) else Color.White)
+                .background(removeColor)
                 .clickable { onRemoveItemClick() }
                 .padding(12.dp)
         )
@@ -395,10 +426,16 @@ private fun ModeToggleView(
     mode: HomeTabMode,
     onModeChange: (HomeTabMode) -> Unit
 ) {
+    val trackColor by animateColorAsState(
+        targetValue = if (mode == HomeTabMode.Vendor) Color(0xFF749CF8) else Color(0xFFDA585B),
+        animationSpec = tween(300),
+        label = "modeTrackColor"
+    )
+
     Row(
         modifier = Modifier
             .background(
-                color = if (mode == HomeTabMode.Vendor) Color(0xFF749CF8) else Color(0xFFDA585B),
+                color = trackColor,
                 shape = RoundedCornerShape(50)
             )
             .padding(6.dp)
@@ -429,7 +466,8 @@ private fun ModeToggleItemView(
     // animated the color change to not flicker
     val bgColor by animateColorAsState(
         targetValue = if (isSelected) Color.White else Color.Transparent,
-        animationSpec = tween(300)
+        animationSpec = tween(300),
+        label = "modeItemColor"
     )
 
     Row(
@@ -452,7 +490,11 @@ private fun ModeToggleItemView(
                 .size(14.dp)
         )
 
-        if(isSelected) {
+        AnimatedVisibility(
+            visible = isSelected,
+            enter = fadeIn(tween(300)),
+            exit = fadeOut(tween(200))
+        ) {
             Text(
                 text = title,
                 fontFamily = Geist,
