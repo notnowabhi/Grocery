@@ -77,7 +77,7 @@ fun AddItemOverlayView(
 
     val pieceQuantity = remember { mutableIntStateOf(0) }
     val gramsQuantity = remember { mutableDoubleStateOf(0.0) } // stored in grams then converted to kg for UI
-    val unit = remember { mutableStateOf(WeightUnit.G) }
+    val unit = remember { mutableStateOf(WeightUnit.KG) }
 
     val imageFile = remember(item.imageName) { productImageFile(context, item.imageName) }
 
